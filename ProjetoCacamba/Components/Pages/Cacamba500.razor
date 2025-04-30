@@ -4,35 +4,61 @@
 <h1>Caçamba de 500L</h1>
 <p class="capacity">Capacidade: 500L</p>
 <p class="technical-description">
-    Medidas: 1m x 1.5m x 1m<br />
+    Medidas: 0.5m x 0.8m x 0.8m<br />
     Especificações: Feita de aço reforçado, ideal para transporte de materiais leves.<br />
-    Cor: @SelectedColor
+    Cor: @System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(SelectedColor)<br />
+    Valor: R$ 350,00
 </p>
 
-<!-- Imagens do produto -->
-<img src="./imagem/red500.PNG" alt="Caçamba de 500L - red" />
-<img src="./imagem/yellow500.PNG" alt="Caçamba de 500L - yellow" />
-<img src="./imagem/blue500.PNG" alt="Caçamba de 500L - blue" />
-<img src="./imagem/green500.PNG" alt="Caçamba de 500L - green" />
-<img src="./imagem/brown500.PNG" alt="Caçamba de 500L - brown" />
+<!-- Botões de seleção de cor -->
+<div class="color-buttons">
+    <!-- Botões de seleção de cor -->
+    <a href="/Cacamba500?color=red"><button>Vermelho</button></a>
+    <a href="/Cacamba500?color=yellow"><button>Amarelo</button></a>
+    <a href="/Cacamba500?color=blue"><button>Azul</button></a>
+    <a href="/Cacamba500?color=green"><button>Verde</button></a>
+    <a href="/Cacamba500?color=brown"><button>Marrom</button></a>
+</div>
+
+<!-- Imagem do produto correspondente à cor selecionada -->
+<div class="image-gallery">
+    <img src="@GetImageForColor(SelectedColor)" alt="Caçamba de 500L - @SelectedColor" class="d-block w-100" />
+</div>
 
 <!-- Botão Comprar pelo WhatsApp -->
-<button class="whatsapp-button" @onclick="BuyViaWhatsApp">Comprar pelo WhatsApp</button>
+<a target="_blank"
+   href="@($"https://wa.me/5513981465671?text={Uri.EscapeDataString($"Olá, tenho interesse na caçamba de 500L na cor {SelectedColor}")}")">
+    <button class="whatsapp-button">Comprar pelo WhatsApp</button>
+</a>
 
 @code {
     [Parameter]
-    public string SelectedColor { get; set; } = "Azul";
+    public string SelectedColor { get; set; } = "blue"; // Cor padrão inicial
 
     protected override void OnInitialized()
     {
         // Obtém a cor da URL, se disponível
         var uri = new Uri(NavigationManager.Uri);
         var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
-        SelectedColor = query["color"] != null ? char.ToUpper(query["color"][0]) + query["color"].Substring(1) : "Azul";
+        SelectedColor = query["color"]?.ToLower() ?? "blue"; // Define a cor com base no parâmetro da URL
     }
 
-    private void BuyViaWhatsApp()
+    private void SelectColor(string color)
     {
-        NavigationManager.NavigateTo($"https://wa.me/5551999999999?text=Olá, tenho interesse na caçamba de 500L na cor {SelectedColor}");
+        SelectedColor = color.ToLower(); // Atualiza a cor selecionada
+        StateHasChanged(); // Garante que a interface seja atualizada
+    }
+
+    private string GetImageForColor(string color)
+    {
+        return color.ToLower() switch
+        {
+            "red" => "./imagem/red500.PNG",
+            "yellow" => "./imagem/yellow500.PNG",
+            "blue" => "./imagem/blue500.PNG",
+            "green" => "./imagem/green500.PNG",
+            "brown" => "./imagem/brown500.PNG",
+            _ => "./imagem/blue500.PNG" // Imagem padrão caso a cor não seja reconhecida
+        };
     }
 }

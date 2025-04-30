@@ -4,61 +4,61 @@
 <h1>Caçamba de 1000L</h1>
 <p class="capacity">Capacidade: 1000L</p>
 <p class="technical-description">
-    Medidas: 1m x 1.5m x 1m<br />
+    Medidas: 0.5m x 0.8m x 0.8m<br />
     Especificações: Feita de aço reforçado, ideal para transporte de materiais leves.<br />
-    Cor: @SelectedColor
+    Cor: @System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(SelectedColor)<br />
+    Valor: R$ 350,00
 </p>
-
-<!-- Imagem do produto correspondente à cor selecionada -->
-<img src="@GetImageForColor(SelectedColor)" alt="Caçamba de 1000L - @SelectedColor" />
 
 <!-- Botões de seleção de cor -->
 <div class="color-buttons">
-    <button data-color="red" @onclick='() => SelectColor("red")'>Vermelho</button>
-    <button data-color="blue" @onclick='() => SelectColor("blue")'>Azul</button>
-    <button data-color="yellow" @onclick='() => SelectColor("yellow")'>Amarelo</button>
-    <button data-color="green" @onclick='() => SelectColor("green")'>Verde</button>
-    <button data-color="brown" @onclick='() => SelectColor("brown")'>Marrom</button>
+    <!-- Botões de seleção de cor -->
+    <a href="/Cacamba1000?color=red"><button>Vermelho</button></a>
+    <a href="/Cacamba1000?color=yellow"><button>Amarelo</button></a>
+    <a href="/Cacamba1000?color=blue"><button>Azul</button></a>
+    <a href="/Cacamba1000?color=green"><button>Verde</button></a>
+    <a href="/Cacamba1000?color=brown"><button>Marrom</button></a>
+</div>
+
+<!-- Imagem do produto correspondente à cor selecionada -->
+<div class="image-gallery">
+    <img src="@GetImageForColor(SelectedColor)" alt="Caçamba de 1000L - @SelectedColor" class="d-block w-100" />
 </div>
 
 <!-- Botão Comprar pelo WhatsApp -->
-<button class="whatsapp-button" @onclick="BuyViaWhatsApp">Comprar pelo WhatsApp</button>
+<a target="_blank"
+   href="@($"https://wa.me/5513981465671?text={Uri.EscapeDataString($"Olá, tenho interesse na caçamba de 1000L na cor {SelectedColor}")}")">
+    <button class="whatsapp-button">Comprar pelo WhatsApp</button>
+</a>
 
 @code {
     [Parameter]
-    public string SelectedColor { get; set; } = "azul";
+    public string SelectedColor { get; set; } = "blue"; // Cor padrão inicial
 
     protected override void OnInitialized()
     {
         // Obtém a cor da URL, se disponível
         var uri = new Uri(NavigationManager.Uri);
         var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
-        SelectedColor = query["color"] != null
-            ? char.ToUpper(query["color"][0]) + query["color"].Substring(1).ToLower()
-            : "Azul";
+        SelectedColor = query["color"]?.ToLower() ?? "blue"; // Define a cor com base no parâmetro da URL
     }
-
 
     private void SelectColor(string color)
     {
-        SelectedColor = color;
-    }
-
-    private void BuyViaWhatsApp()
-    {
-        NavigationManager.NavigateTo($"https://wa.me/5551999999999?text=Olá, tenho interesse na caçamba de 1000L na cor {SelectedColor}");
+        SelectedColor = color.ToLower(); // Atualiza a cor selecionada
+        StateHasChanged(); // Garante que a interface seja atualizada
     }
 
     private string GetImageForColor(string color)
     {
-        return color switch
+        return color.ToLower() switch
         {
             "red" => "./imagem/red1000.PNG",
-            "blue" => "./imagem/blue1000.PNG",
             "yellow" => "./imagem/yellow1000.PNG",
+            "blue" => "./imagem/blue1000.PNG",
             "green" => "./imagem/green1000.PNG",
             "brown" => "./imagem/brown1000.PNG",
-            _ => "./imagem/default1000.PNG" // Imagem padrão caso a cor não seja reconhecida
+            _ => "./imagem/blue1000.PNG" // Imagem padrão caso a cor não seja reconhecida
         };
     }
 }

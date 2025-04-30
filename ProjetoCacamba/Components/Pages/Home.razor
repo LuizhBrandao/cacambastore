@@ -16,45 +16,99 @@
         <section class="product-list">
             <!-- Produto: Caçamba de 100L -->
             <div class="product-item">
+                <p>Caçamba de 100L</p>
+                <p>Valor: R$ 100,00</p>
                 <a href="/Cacamba100">
                     <img src="./imagem/cacambaeuro100.png" alt="Caçamba de 100L" />
-                    <div class="product-name">Caçamba de 100L</div>                
-                    <!-- Botões de cores -->
-                    <button data-color="red" @onclick='() => NavigationManager.NavigateTo("/Cacamba100?color=red")'>Vermelho</button>
-                    <button data-color="blue" @onclick='() => NavigationManager.NavigateTo("/Cacamba100?color=blue")'>Azul</button>
-                    <button data-color="yellow" @onclick='() => NavigationManager.NavigateTo("/Cacamba100?color=yellow")'>Amarelo</button>
-                    <button data-color="green" @onclick='() => NavigationManager.NavigateTo("/Cacamba100?color=green")'>Verde</button>
-                    <button data-color="brown" @onclick='() => NavigationManager.NavigateTo("/Cacamba100?color=brown")'>Marrom</button>
+                    <div class="product-name">Caçamba de 100L</div>
                 </a>
+                <div class="color-buttons">
+                    <a href="/Cacamba100/#red100" target="_self"><button>Vermelho</button></a>
+                    <a href="/Cacamba100/#yellow100" target="_self"><button>Amarelo</button></a>
+                    <a href="/Cacamba100/#blue100" target="_self"><button>Azul</button></a>
+                    <a href="/Cacamba100/#green100" target="_self"><button>Verde</button></a>
+                    <a href="/Cacamba100/#brown100" target="_self"><button>Marrom</button></a>
+                </div>
             </div>
 
             <!-- Produto: Caçamba de 500L -->
             <div class="product-item">
+                <p>Caçamba de 500L</p>
+                <p>Valor: R$ 350,00</p>
                 <a href="/Cacamba500">
                     <img src="./imagem/cacambaeuro500.png" alt="Caçamba de 500L" />
                     <div class="product-name">Caçamba de 500L</div>
-                    <!-- Botões de cores -->
-                    <button data-color="red" @onclick='() => NavigationManager.NavigateTo("/Cacamba500?color=red")'>Vermelho</button>
-                    <button data-color="blue" @onclick='() => NavigationManager.NavigateTo("/Cacamba500?color=blue")'>Azul</button>
-                    <button data-color="yellow" @onclick='() => NavigationManager.NavigateTo("/Cacamba500?color=yellow")'>Amarelo</button>
-                    <button data-color="green" @onclick='() => NavigationManager.NavigateTo("/Cacamba500?color=green")'>Verde</button>
-                    <button data-color="brown" @onclick='() => NavigationManager.NavigateTo("/Cacamba500?color=brown")'>Marrom</button>
                 </a>
+                <!-- Botões de seleção de cor -->
+                <a href="/Cacamba500?color=red"><button>Vermelho</button></a>
+                <a href="/Cacamba500?color=yellow"><button>Amarelo</button></a>
+                <a href="/Cacamba500?color=blue"><button>Azul</button></a>
+                <a href="/Cacamba500?color=green"><button>Verde</button></a>
+                <a href="/Cacamba500?color=brown"><button>Marrom</button></a>
+
             </div>
 
             <!-- Produto: Caçamba de 1000L -->
             <div class="product-item">
+                <p>Caçamba de 1000L</p>
+                <p>Valor: R$ 700,00</p>
                 <a href="/Cacamba1000">
                     <img src="./imagem/cacambaeuro1000.png" alt="Caçamba de 1000L" />
                     <div class="product-name">Caçamba de 1000L</div>
-                    <!-- Botões de cores -->
-                    <button data-color="red" @onclick='() => NavigationManager.NavigateTo("/Cacamba1000?color=red")'>Vermelho</button>
-                    <button data-color="blue" @onclick='() => NavigationManager.NavigateTo("/Cacamba1000?color=blue")'>Azul</button>
-                    <button data-color="yellow" @onclick='() => NavigationManager.NavigateTo("/Cacamba1000?color=yellow")'>Amarelo</button>
-                    <button data-color="green" @onclick='() => NavigationManager.NavigateTo("/Cacamba1000?color=green")'>Verde</button>
-                    <button data-color="brown" @onclick='() => NavigationManager.NavigateTo("/Cacamba1000?color=brown")'>Marrom</button>
                 </a>
+                <div class="color-buttons">
+                    <a href="/Cacamba1000/#red1000" target="_self"><button>Vermelho</button></a>
+                    <a href="/Cacamba1000/#yellow1000" target="_self"><button>Amarelo</button></a>
+                    <a href="/Cacamba1000/#blue1000" target="_self"><button>Azul</button></a>
+                    <a href="/Cacamba1000/#green1000" target="_self"><button>Verde</button></a>
+                    <a href="/Cacamba1000/#brown1000" target="_self"><button>Marrom</button></a>
+                </div>
             </div>
+
         </section>
+        
+
     </main>
 </div>
+
+@code {
+    [Parameter]
+    public string SelectedColor { get; set; } = "azul"; // Cor padrão inicial
+
+    protected override void OnInitialized()
+    {
+        // Obtém a cor da URL, se disponível
+        var uri = new Uri(NavigationManager.Uri);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        SelectedColor = query["color"]?.ToLower() ?? "azul"; // Define a cor com base no parâmetro da URL
+    }
+
+    private void SelectColor(string color)
+    {
+        SelectedColor = color.ToLower(); // Atualiza a cor selecionada
+        StateHasChanged(); // Garante que a interface seja atualizada
+    }
+
+    private string GetImageForColor(string color)
+    {
+        return color.ToLower() switch
+        {
+            "red" => "./imagem/red500.PNG",
+            "yellow" => "./imagem/yellow500.PNG",
+            "blue" => "./imagem/blue500.PNG",
+            "green" => "./imagem/green500.PNG",
+            "brown" => "./imagem/brown500.PNG",
+            _ => "./imagem/blue500.PNG" // Imagem padrão caso a cor não seja reconhecida
+        };
+    }
+
+    private void ComprarPeloWhatsApp()
+    {
+        var url = $"https://wa.me/5513981465671?text={Uri.EscapeDataString($"Olá, tenho interesse na caçamba de 500L na cor {SelectedColor}")}";
+        NavigationManager.NavigateTo(url, true);
+    }
+
+    
+
+}
+
