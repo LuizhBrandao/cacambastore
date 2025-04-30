@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\product\**" />
+    <Content Remove="wwwroot\product\**" />
+    <EmbeddedResource Remove="wwwroot\product\**" />
+    <None Remove="wwwroot\product\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProjetoCacamba.Client\ProjetoCacamba.Client.csproj" />
+    <PackageReference Include="bunit" Version="1.39.5" />
+    <PackageReference Include="bunit.core" Version="1.39.5" />
+    <PackageReference Include="bunit.web" Version="1.39.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.13" />
+  </ItemGroup>
+
+</Project>

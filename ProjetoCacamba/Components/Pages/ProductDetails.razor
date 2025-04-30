@@ -1,0 +1,32 @@
+﻿@page "/product-details"
+@inject NavigationManager NavigationManager
+
+<h3>Descrição do Produto</h3>
+
+<p>Medidas: 1m x 1.5m x 1m</p>
+<p>Cor: @TranslateColor(color)</p>
+<p>Especificações: Fabricado em polietileno de alta densidade. Resistente e durável.</p>
+
+@code {
+    private string? color;
+
+    protected override void OnInitialized()
+    {
+        // Lê o parâmetro "color" da URL
+        var uri = new Uri(NavigationManager.Uri);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        color = query["color"];
+    }
+
+    private string TranslateColor(string? color)
+    {
+        return color?.ToLower() switch
+        {
+            "red" => "Vermelho",
+            "blue" => "Azul",
+            "yellow" => "Amarelo",
+            "green" => "Verde",
+            _ => "Desconhecida"
+        };
+    }
+}

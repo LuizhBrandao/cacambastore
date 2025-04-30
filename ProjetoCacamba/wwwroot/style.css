@@ -1,0 +1,59 @@
+﻿namespace ProjetoCacamba.wwwroot
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+img {
+    width: 300px;
+}
+
+button[data-color="red"] {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+button[data-color="blue"] {
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+button[data-color="yellow"] {
+    background-color: yellow;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+button[data-color="green"] {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+button[data-color="brown"] {
+    background-color: brown;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+}

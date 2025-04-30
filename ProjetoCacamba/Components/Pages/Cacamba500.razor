@@ -1,0 +1,38 @@
+﻿@page "/Cacamba500"
+@inject NavigationManager NavigationManager
+
+<h1>Caçamba de 500L</h1>
+<p class="capacity">Capacidade: 500L</p>
+<p class="technical-description">
+    Medidas: 1m x 1.5m x 1m<br />
+    Especificações: Feita de aço reforçado, ideal para transporte de materiais leves.<br />
+    Cor: @SelectedColor
+</p>
+
+<!-- Imagens do produto -->
+<img src="./imagem/red500.PNG" alt="Caçamba de 500L - red" />
+<img src="./imagem/yellow500.PNG" alt="Caçamba de 500L - yellow" />
+<img src="./imagem/blue500.PNG" alt="Caçamba de 500L - blue" />
+<img src="./imagem/green500.PNG" alt="Caçamba de 500L - green" />
+<img src="./imagem/brown500.PNG" alt="Caçamba de 500L - brown" />
+
+<!-- Botão Comprar pelo WhatsApp -->
+<button class="whatsapp-button" @onclick="BuyViaWhatsApp">Comprar pelo WhatsApp</button>
+
+@code {
+    [Parameter]
+    public string SelectedColor { get; set; } = "Azul";
+
+    protected override void OnInitialized()
+    {
+        // Obtém a cor da URL, se disponível
+        var uri = new Uri(NavigationManager.Uri);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        SelectedColor = query["color"] != null ? char.ToUpper(query["color"][0]) + query["color"].Substring(1) : "Azul";
+    }
+
+    private void BuyViaWhatsApp()
+    {
+        NavigationManager.NavigateTo($"https://wa.me/5551999999999?text=Olá, tenho interesse na caçamba de 500L na cor {SelectedColor}");
+    }
+}

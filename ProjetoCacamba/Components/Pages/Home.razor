@@ -1,0 +1,60 @@
+﻿@page "/"
+@inject NavigationManager NavigationManager
+
+<PageTitle>Home</PageTitle>
+
+<div class="home-page">
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <header>
+        <img style="width:100px" src="imagem/logo.png" alt="Logo" />
+    </header>
+
+    <main>
+        <h2>Seja bem-vindo</h2>
+        <section class="product-list">
+            <!-- Produto: Caçamba de 100L -->
+            <div class="product-item">
+                <a href="/Cacamba100">
+                    <img src="./imagem/cacambaeuro100.png" alt="Caçamba de 100L" />
+                    <div class="product-name">Caçamba de 100L</div>                
+                    <!-- Botões de cores -->
+                    <button data-color="red" @onclick='() => NavigationManager.NavigateTo("/Cacamba100?color=red")'>Vermelho</button>
+                    <button data-color="blue" @onclick='() => NavigationManager.NavigateTo("/Cacamba100?color=blue")'>Azul</button>
+                    <button data-color="yellow" @onclick='() => NavigationManager.NavigateTo("/Cacamba100?color=yellow")'>Amarelo</button>
+                    <button data-color="green" @onclick='() => NavigationManager.NavigateTo("/Cacamba100?color=green")'>Verde</button>
+                    <button data-color="brown" @onclick='() => NavigationManager.NavigateTo("/Cacamba100?color=brown")'>Marrom</button>
+                </a>
+            </div>
+
+            <!-- Produto: Caçamba de 500L -->
+            <div class="product-item">
+                <a href="/Cacamba500">
+                    <img src="./imagem/cacambaeuro500.png" alt="Caçamba de 500L" />
+                    <div class="product-name">Caçamba de 500L</div>
+                    <!-- Botões de cores -->
+                    <button data-color="red" @onclick='() => NavigationManager.NavigateTo("/Cacamba500?color=red")'>Vermelho</button>
+                    <button data-color="blue" @onclick='() => NavigationManager.NavigateTo("/Cacamba500?color=blue")'>Azul</button>
+                    <button data-color="yellow" @onclick='() => NavigationManager.NavigateTo("/Cacamba500?color=yellow")'>Amarelo</button>
+                    <button data-color="green" @onclick='() => NavigationManager.NavigateTo("/Cacamba500?color=green")'>Verde</button>
+                    <button data-color="brown" @onclick='() => NavigationManager.NavigateTo("/Cacamba500?color=brown")'>Marrom</button>
+                </a>
+            </div>
+
+            <!-- Produto: Caçamba de 1000L -->
+            <div class="product-item">
+                <a href="/Cacamba1000">
+                    <img src="./imagem/cacambaeuro1000.png" alt="Caçamba de 1000L" />
+                    <div class="product-name">Caçamba de 1000L</div>
+                    <!-- Botões de cores -->
+                    <button data-color="red" @onclick='() => NavigationManager.NavigateTo("/Cacamba1000?color=red")'>Vermelho</button>
+                    <button data-color="blue" @onclick='() => NavigationManager.NavigateTo("/Cacamba1000?color=blue")'>Azul</button>
+                    <button data-color="yellow" @onclick='() => NavigationManager.NavigateTo("/Cacamba1000?color=yellow")'>Amarelo</button>
+                    <button data-color="green" @onclick='() => NavigationManager.NavigateTo("/Cacamba1000?color=green")'>Verde</button>
+                    <button data-color="brown" @onclick='() => NavigationManager.NavigateTo("/Cacamba1000?color=brown")'>Marrom</button>
+                </a>
+            </div>
+        </section>
+    </main>
+</div>
